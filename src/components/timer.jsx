@@ -1,8 +1,9 @@
-const Timer = () => {
+const Timer = ({ time }) => {
+  
+  
+  return <>
     
-    return (
-        <>
-        
-        </>
-    )
-}
+  </>;
+};
+
+export default Timer;
