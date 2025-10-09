@@ -4,24 +4,27 @@ import HandleCLick from "./components/handleClick";
 function App() {
   const clock = 1500;
   const [time, setTime] = useState(clock);
-  const [run, setRun] = useState(false);
+  const [run, setRun] = useState(false);  //false = No state changes
 
   const timeFixed = () => {
-    const minutes = Math.floor(time / 60);
-    const secs = time % 60;
-    return `${minutes}:${secs.toString().padStart(2, "0")}`;
+    const minutes = Math.floor(time/60); // state divided in 60 == 25, math.floor eliminates decimals 
+    const secs = time % 60;  // the reminder of what we had divided == 0  
+    return ` ${minutes} : ${secs.toString().padStart(2, "0")} `; // 25 : secs into string = 2 == length, "0" is the number to start with 
   };
 
-  const startTimer = () => setRun(true); // This is the function I need to pass to start tracking the time 
-
-  // let intervalId;
+  const startTimer = () => setRun(true); //function  => start tracking the time, =>  true cause false makes the time stay the same 
+  const endTimer = () => setRun(false);  
+  const resetTimer = () => {setRun (false); // this line makes the code stop when it reset whithout reset button being pressed 
+    setTime(clock) // This returns to the very first time. 
+   }
+  
   useEffect(() => {
-    if (!run) return;
-    const interval = setInterval(() => {
-      setTime((prev) => prev - 1);
-    }, 1000);     // If I add brakets, it'll be an array and react is expecting numbers, instead just return the number  , 1000); not [1000]; 
+    if (!run) return; // Do nothing if not touched 
+    const interval = setInterval(() => {   // Creates the const where we keep the setInterval 
+      setTime((prev) => prev - 1); // we can acces to the state, we create a function prev and then we make it go backwards 
+    }, 1000); // If I add brakets, it'll be an array and react is expecting numbers, instead just return the number  , 1000); not [1000];
     return () => clearInterval(interval); 
-  }, [run]);   // return this only when react changes 
+  }, [run]); // return this only when react changes
 
   return (
     <>
@@ -31,7 +34,11 @@ function App() {
 
       <h1>{timeFixed()}</h1>
 
-      <HandleCLick onClick={startTimer} />
+      <HandleCLick 
+      start={startTimer} 
+      stop={endTimer} 
+      reset={resetTimer}      
+      />
     </>
   );
 }
