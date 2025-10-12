@@ -21,7 +21,10 @@ function App() {
   useEffect(() => {
     if (!run) return; // Do nothing if not touched 
     const interval = setInterval(() => {   // Creates the const where we keep the setInterval 
-      setTime((prev) => prev - 1); // we can acces to the state, we create a function prev and then we make it go backwards 
+      setTime((prev) => { if (prev <= 0) return 0 ;   
+     return prev -1}
+    );  // we can acces to the state, we create a function prev and then we make it go backwards 
+      
     }, 1000); // If I add brakets, it'll be an array and react is expecting numbers, instead just return the number  , 1000); not [1000];
     return () => clearInterval(interval); 
   }, [run]); // return this only when react changes
