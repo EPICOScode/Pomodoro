@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import HandleCLick from "./components/handleClick";
+import Break from "./components/timer";
 
 function App() {
-  const clock = 1500;
+  const clock = 50;
   const [time, setTime] = useState(clock);
   const [run, setRun] = useState(false);  //false = No state changes
+  const [open, setOpen] = useState(false);
+  
 
   const timeFixed = () => {
     const minutes = Math.floor(time/60); // state divided in 60 == 25, math.floor eliminates decimals 
@@ -14,20 +17,27 @@ function App() {
 
   const startTimer = () => setRun(true); //function  => start tracking the time, =>  true cause false makes the time stay the same 
   const endTimer = () => setRun(false);  
-  const resetTimer = () => {setRun (false); // this line makes the code stop when it reset whithout reset button being pressed 
+  const resetTimer = () => {setRun (false); // this line makes the code stop when it resets whithout "reset" button being pressed 
     setTime(clock) // This returns to the very first time. 
    }
   
-  useEffect(() => {
-    if (!run) return; // Do nothing if not touched 
-    const interval = setInterval(() => {   // Creates the const where we keep the setInterval 
-      setTime((prev) => { if (prev <= 0) return 0 ;   
-     return prev -1}
-    );  // we can acces to the state, we create a function prev and then we make it go backwards 
+    useEffect(() => {
+      if (!run) return; // Do nothing if not touched, it means that if this is not in the top of the clock  gear (useEffect), the counter will go on by itself 
+      
+      const interval = setInterval(() => {   // Creates the const where we keep the setInterval 
+        setTime(prev => { if (prev <= 0) {setOpen(true)
+          return 0; 
+        }else {
+        return prev -1; 
+        }
+    });   
+      // we can acces to the state, we create a function prev and then we make it go backwards using prev -1;  
       
     }, 1000); // If I add brakets, it'll be an array and react is expecting numbers, instead just return the number  , 1000); not [1000];
     return () => clearInterval(interval); 
-  }, [run]); // return this only when react changes
+  },[run]); // return this only when react changes
+
+
 
   return (
     <>
@@ -42,6 +52,7 @@ function App() {
       stop={endTimer} 
       reset={resetTimer}      
       />
+      <Break open={open} setOpen={setOpen}/>
     </>
   );
 }
