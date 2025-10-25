@@ -3,7 +3,7 @@ import HandleCLick from "./components/handleClick";
 import Break from "./components/timer";
 
 function App() {
-  const clock = 50;
+  const clock = 10;
   const [time, setTime] = useState(clock);
   const [run, setRun] = useState(false);  //false = No state changes
   const [open, setOpen] = useState(false);
@@ -25,7 +25,7 @@ function App() {
       if (!run) return; // Do nothing if not touched, it means that if this is not in the top of the clock  gear (useEffect), the counter will go on by itself 
       
       const interval = setInterval(() => {   // Creates the const where we keep the setInterval 
-        setTime(prev => { if (prev <= 0) {setOpen(true)
+        setTime(prev => { if (prev <= 1) {setOpen(true)
           return 0; 
         }else {
         return prev -1; 
