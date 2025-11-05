@@ -4,17 +4,21 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-// <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-  // <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM9 8.25a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75h.75a.75.75 0 0 0 .75-.75V9a.75.75 0 0 0-.75-.75H9Zm5.25 0a.75.75 0 0 0-.75.75v6c0 .414.336.75.75.75H15a.75.75 0 0 0 .75-.75V9a.75.75 0 0 0-.75-.75h-.75Z" clipRule="evenodd" />
-// </svg
 
-import {PauseCircleIcon} from "@heroicons/react/24/outline";
+import { PauseCircleIcon } from "@heroicons/react/24/outline";
 
-const Break = ({ open, setOpen }) => {
+const Break = ({ open, setOpen, setRun, setTime }) => {
+
+const pause = 300; 
+
   return (
     <>
       <div>
-        <Dialog open={open} onClose={()=>setOpen(false)} className="relative z-10">
+        <Dialog
+          open={open}
+          onClose={() => setOpen(false)}
+          className="relative z-10"
+        >
           <DialogBackdrop
             transition
             className="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
@@ -47,6 +51,25 @@ const Break = ({ open, setOpen }) => {
                       </div>
                     </div>
                   </div>
+                </div>
+                <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    className="inline-flex w-full justify-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white hover:bg-red-400 sm:ml-3 sm:w-auto"
+                  >
+                    Start Break
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => { 
+                      setOpen(false); setTime(true); setRun(true)
+                    }}
+                    className="inline-flex w-full justify-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white hover:bg-red-400 sm:ml-3 sm:w-auto"
+                  >
+                    Skip break
+                  </button>
                 </div>
               </DialogPanel>
             </div>
