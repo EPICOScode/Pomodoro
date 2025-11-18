@@ -1,18 +1,13 @@
 import { useState, useEffect } from "react";
 import HandleCLick from "./components/handleClick";
 import Break from "./components/timer";
-
+import Timerdisplay from "./components/features/timerDisplay";
+  
 function App() {
-  const clock = 3;
+  const clock = 10;
   const [time, setTime] = useState(clock); // useState to setup the clock
   const [run, setRun] = useState(false); //false = No state changes. This useState runs the useEffect when it's launched by the user
-  const [open, setOpen] = useState(false); // The state that opens the modal, headleeUI component 
-
-  const timeFixed = () => {
-    const minutes = Math.floor(time / 60); // state divided in 60 == 25, math.floor eliminates decimals
-    const secs = time % 60; // the reminder of what we had divided == 0
-    return ` ${minutes} : ${secs.toString().padStart(2, "0")} `; // 25 : secs into string = 2 == length, "0" is the number to start with
-  };
+  const [open, setOpen] = useState(false); // The state that opens the modal, headleeUI component
 
   const startTimer = () => setRun(true); //function  => start tracking the time, =>  true cause false makes the time stay the same
   const endTimer = () => setRun(false);
@@ -38,23 +33,21 @@ function App() {
     return () => clearInterval(interval);
   }, [run]); // return this only when react changes
 
-  return (
-    <>
-      <h1 className="bg-linear-to-r from-blue-500 to-violet-500 bg-clip-text text-5xl font-extrabold text-transparent ">
-        POMODORO
-      </h1>
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen"> 
+        <h1 className="">POMODORO</h1>
 
-      <h1>{timeFixed()}</h1>
+        <Timerdisplay time={time}/>
 
-      <HandleCLick start={startTimer} stop={endTimer} reset={resetTimer} />
-      <Break
-        open={open}
-        setOpen={setOpen}
-        setTime={resetTimer}
-        setRun={startTimer}
-      />
-    </>
-  );
-}
+        <HandleCLick start={startTimer} stop={endTimer} reset={resetTimer} />
+        <Break  
+          open={open}
+          setOpen={setOpen}
+          setTime={resetTimer}
+          setRun={startTimer}
+        />
+      </div>
+    );
+  }
 
 export default App;
