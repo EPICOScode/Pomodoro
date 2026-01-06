@@ -20,9 +20,13 @@ function App() {
   const endTimer = () => setRun(false);
   const resetTimer = () => {
     setRun(false); // this line makes the code stop when it resets whithout "reset" button being pressed
-    setTime(clock); // This returns to the very first time.
+     if (theBreak) {
+       setTime(breakTime);
+    }else {
+      setTime (clock); 
+     }
+     // This returns to the very first time.
   }; 
-
 
   const skipBreak = () => {
     setTheBreak (false);
@@ -31,7 +35,6 @@ function App() {
     setOpen(false)
   } 
 
-
   const startBreak =() => {
     setTheBreak(true); 
     setTime(breakTime); 
@@ -39,13 +42,14 @@ function App() {
     setOpen(false); 
   }
 
+  /******************************* Engine ************************************/
   useEffect(() => {
     if (!run) return; // Do nothing if not touched, it means that if this is not in the top of the clock  gear (useEffect), the counter will go on by itself
     const interval = setInterval(() => {
       // Creates the const where we keep the setInterval
         setTime((prev) => {
           if (prev <= 1) { // if the prop is less or equal to one then 
-            setRun(false), setOpen(true); // stop the effect of counting and open the modal 
+            setRun(false), setOpen(true); // stop the effect of+ counting and open the modal 
             return 0; // the clock stays in zero while the modal remains open 
           } else {
             return prev - 1; // Otherwise count backwards 
