@@ -7,10 +7,7 @@ import {
 
 import { PauseCircleIcon } from "@heroicons/react/24/outline";
 
-const Break = ({ open, setOpen, setRun, setTime }) => {
-
-const pause = 300; 
-
+const Timer = ({ open, onBreak, onSkipBreak}) => {
   return (
     <>
       <div>
@@ -55,17 +52,15 @@ const pause = 300;
                 <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
                     type="button"
-                    onClick={() => setOpen(false)}
+                    onClick={onBreak}
                     className="inline-flex w-full justify-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white hover:bg-red-400 sm:ml-3 sm:w-auto"
                   >
                     Start Break
                   </button>
-
+                    
                   <button
                     type="button"
-                    onClick={() => { 
-                      setOpen(false); setTime(true); setRun(true)
-                    }}
+                    onClick={onSkipBreak}
                     className="inline-flex w-full justify-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white hover:bg-red-400 sm:ml-3 sm:w-auto"
                   >
                     Skip break
@@ -80,4 +75,4 @@ const pause = 300;
   );
 };
 
-export default Break;
+export default Timer;
